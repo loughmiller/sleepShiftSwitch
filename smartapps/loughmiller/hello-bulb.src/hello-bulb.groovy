@@ -33,11 +33,13 @@ preferences {
     section("Lights?") {
         input "lLevel", "capability.switchLevel", title: "level", required: false, multiple: true
         input "lTemp", "capability.colorTemperature", title: "temp", required: false, multiple: true
+        input "lSwitch", "capability.switch", title: "switch", required: false, multiple: true
     }
 
     section("Nightlight?") {
         input "nlLevel", "capability.switchLevel", title: "level", required: false, multiple: true
         input "nlTemp", "capability.colorTemperature", title: "temp", required: false, multiple: true
+        input "nlSwitch", "capability.switch", title: "switch", required: false, multiple: true
     }
 }
 
@@ -90,7 +92,7 @@ def switchOffHandler(evt) {
     log.info "switch turned off!"
     nlLevel.setLevel(2)
     nlTemp.setColorTemperature(1900)
-    nlLevel.setLevel(0)
+
     lLevel.setLevel(2)
     lTemp.setColorTemperature(1900)
     lLevel.setLevel(0)
