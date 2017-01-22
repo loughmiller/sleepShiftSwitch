@@ -22,8 +22,7 @@ metadata {
 		capability "Refresh"
 		capability "Switch"
 		capability "Switch Level"
-        
-        command "setColorTemp"
+        capability "Color Temperature"
         
         attribute "colorTemp", "string"
 		attribute "kelvin", "string"
@@ -56,7 +55,7 @@ metadata {
 			state "level", action:"switch level.setLevel"
 		}
         controlTile("colorSliderControl", "device.colorTemp", "slider", height: 1, width: 2, inactiveLabel: false, range: "(1900..6500)") {
-			state "colorTemp", action:"setColorTemp"
+			state "colorTemp", action:"setColorTemperature"
 		}
 		valueTile("kelvin", "device.kelvin", inactiveLabel: false, decoration: "flat") {
 			state "kelvin", label: 'Temp ${currentValue}K'
@@ -182,9 +181,9 @@ def setLevel(value) {
 	cmds
 }
 
-def setColorTemp(value) {
+def setColorTemperature(value) {
 	
-    log.trace "setColorTemp($value)"
+    log.trace "setColorTemperature($value)"
     
 
     
