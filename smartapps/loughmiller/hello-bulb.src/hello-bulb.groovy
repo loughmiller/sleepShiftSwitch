@@ -90,11 +90,11 @@ def switchOnHandler(evt) {
 }
 def switchOffHandler(evt) {
     log.info "switch turned off!"
-    nlLevel.setLevel(2)
     nlTemp.setColorTemperature(1900)
-    nlSwitch.off()
+    nlLevel.setLevel(0)
+    // nlSwitch.off()
 
-    lLevel.setLevel(2)
     lTemp.setColorTemperature(1900)
-    lSwitch.off()
+    lLevel.setLevel(0)
+    // lSwitch.off()
 }
