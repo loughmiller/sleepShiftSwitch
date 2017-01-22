@@ -26,10 +26,6 @@ definition(
 
 
 preferences {
-	section("Title") {
-		// TODO: put inputs here
-	}
-    
     section("Virtual Switch?") {
         input "virtualSwitch", "capability.switch", required: true
     }
@@ -39,59 +35,59 @@ preferences {
         input "lTemp", "capability.colorTemperature", title: "temp", required: false, multiple: true
     }
 
-	section("Nightlight?") {
+    section("Nightlight?") {
         input "nlLevel", "capability.switchLevel", title: "level", required: false, multiple: true
         input "nlTemp", "capability.colorTemperature", title: "temp", required: false, multiple: true
     }
 }
 
 def installed() {
-	log.debug "Installed with settings: ${settings}"
+    log.debug "Installed with settings: ${settings}"
 
-	initialize()
+    initialize()
 }
 
 def updated() {
-	log.debug "Updated with settings: ${settings}"
+    log.debug "Updated with settings: ${settings}"
 
-	unsubscribe()
-	initialize()
+    unsubscribe()
+    initialize()
 }
 
 def initialize() {
-	// TODO: subscribe to attributes, devices, locations, etc.
     subscribe(virtualSwitch, "switch.on", switchOnHandler)
     subscribe(virtualSwitch, "switch.off", switchOffHandler)
 }
 
 def switchOnHandler(evt) {
     log.info "switch on"
-	def currentMode = location.mode
+    def currentMode = location.mode
     log.info "mode: ${currentMode}"
+
     if (currentMode == "Bedtime") {
-        log.info "switch turned on, and it's bedtime" 
-		nlLevel.setLevel(2)
+        log.info "switch turned on, and it's bedtime"
+        nlLevel.setLevel(2)
         nlTemp.setColorTemperature(1900)
-	} else if (currentMode == "Night") {
-		log.info "switch turned on, and it's nighttime!" 
-		nlLevel.setLevel(100)
+    } else if (currentMode == "Night") {
+        log.info "switch turned on, and it's nighttime!"
+        nlLevel.setLevel(100)
         nlTemp.setColorTemperature(2300)
-	} else if (currentMode == "Evening") {
-		log.info "switch turned on, and it's evening!" 
-		nlLevel.setLevel(100)
+    } else if (currentMode == "Evening") {
+        log.info "switch turned on, and it's evening!"
+        nlLevel.setLevel(100)
         nlTemp.setColorTemperature(2700)
-		lLevel.setLevel(100)
+        lLevel.setLevel(100)
         lTemp.setColorTemperature(2700)
     } else {
-		log.info "switch turned on, and it's daytime!" 
+        log.info "switch turned on, and it's daytime!"
         nlLevel.setLevel(100)
         nlTemp.setColorTemperature(4500)
-		lLevel.setLevel(100)
+        lLevel.setLevel(100)
         lTemp.setColorTemperature(4500)
     }
 }
 def switchOffHandler(evt) {
     log.info "switch turned off!"
     nlLevel.setLevel(0)
-	lLevel.setLevel(0)
+    lLevel.setLevel(0)
 }
